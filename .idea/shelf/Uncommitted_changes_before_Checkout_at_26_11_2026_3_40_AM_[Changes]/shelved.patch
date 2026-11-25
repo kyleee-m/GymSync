@@ -1,0 +1,184 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"201befdc-fa41-45fd-8c69-296180c8fb02\" name=\"Changes\" comment=\"project setup replaced\">\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]/shelved.patch\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]1/shelved.patch\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/pom.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PUSH_TAGS\">\r\n      <GitPushTagMode>\r\n        <option name=\"argument\" value=\"--tags\" />\r\n        <option name=\"title\" value=\"All\" />\r\n      </GitPushTagMode>\r\n    </option>\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\"><![CDATA[{\r\n  \"lastFilter\": {\r\n    \"state\": \"OPEN\",\r\n    \"assignee\": \"Aji-09\"\r\n  }\r\n}]]></component>\r\n  <component name=\"GithubDefaultAccount\">\r\n    <option name=\"defaultAccountId\" value=\"f706aa07-31af-497a-83f5-75eea0de07b6\" />\r\n  </component>\r\n  <component name=\"GithubPullRequestsUISettings\"><![CDATA[{\r\n  \"selectedUrlAndAccountId\": {\r\n    \"url\": \"https://github.com/Aji-09/GymSync_Villanueva_FORKED\",\r\n    \"accountId\": \"f706aa07-31af-497a-83f5-75eea0de07b6\"\r\n  }\r\n}]]></component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"mavenHomeTypeForPersistence\" value=\"WRAPPER\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"NextEditCompletionFeaturesState\">\r\n    <decayedCancelled>\r\n      <entry key=\"MS100\" value=\"1.0\" />\r\n      <entry key=\"MS500\" value=\"1.0000053088179353\" />\r\n      <entry key=\"S2\" value=\"1.2767682066341561\" />\r\n      <entry key=\"S5\" value=\"4.423700271274935\" />\r\n      <entry key=\"S10\" value=\"10.197474490898063\" />\r\n      <entry key=\"S30\" value=\"21.179708914203434\" />\r\n      <entry key=\"S60\" value=\"29.17183966341902\" />\r\n      <entry key=\"M2\" value=\"41.36491443950242\" />\r\n      <entry key=\"M5\" value=\"80.70137466546997\" />\r\n      <entry key=\"M10\" value=\"127.76524908515226\" />\r\n      <entry key=\"M15\" value=\"154.74469094335205\" />\r\n      <entry key=\"M30\" value=\"191.56288805342467\" />\r\n      <entry key=\"H1\" value=\"215.05260661724736\" />\r\n      <entry key=\"H2\" value=\"228.40656370104645\" />\r\n      <entry key=\"H4\" value=\"235.5395633806744\" />\r\n      <entry key=\"D1\" value=\"241.73305881247376\" />\r\n      <entry key=\"W1\" value=\"242.818421282373\" />\r\n    </decayedCancelled>\r\n    <decayedSelected>\r\n      <entry key=\"MS100\" value=\"0.0\" />\r\n      <entry key=\"MS500\" value=\"5.1431979417960465E-102\" />\r\n      <entry key=\"S2\" value=\"4.762207446042102E-26\" />\r\n      <entry key=\"S5\" value=\"7.432301583674795E-11\" />\r\n      <entry key=\"S10\" value=\"8.621079737292064E-6\" />\r\n      <entry key=\"S30\" value=\"0.02050472208288203\" />\r\n      <entry key=\"S60\" value=\"0.14319503057991656\" />\r\n      <entry key=\"M2\" value=\"0.37899958815863083\" />\r\n      <entry key=\"M5\" value=\"0.7502440238300919\" />\r\n      <entry key=\"M10\" value=\"1.3030735234107256\" />\r\n      <entry key=\"M15\" value=\"1.8276786053616978\" />\r\n      <entry key=\"M30\" value=\"2.863452066542273\" />\r\n      <entry key=\"H1\" value=\"3.7363316090139223\" />\r\n      <entry key=\"H2\" value=\"4.309335030095272\" />\r\n      <entry key=\"H4\" value=\"4.638483181998497\" />\r\n      <entry key=\"D1\" value=\"4.9373616353733825\" />\r\n      <entry key=\"W1\" value=\"4.990991353901256\" />\r\n    </decayedSelected>\r\n    <decayedShown>\r\n      <entry key=\"MS100\" value=\"0.2534898699475073\" />\r\n      <entry key=\"MS500\" value=\"0.7599675784389375\" />\r\n      <entry key=\"S2\" value=\"1.2076003158694426\" />\r\n      <entry key=\"S5\" value=\"4.380494464143797\" />\r\n      <entry key=\"S10\" value=\"10.161099711340695\" />\r\n      <entry key=\"S30\" value=\"21.176983363066874\" />\r\n      <entry key=\"S60\" value=\"29.29485151451864\" />\r\n      <entry key=\"M2\" value=\"41.72503785448344\" />\r\n      <entry key=\"M5\" value=\"81.43304699378798\" />\r\n      <entry key=\"M10\" value=\"129.0469857851016\" />\r\n      <entry key=\"M15\" value=\"156.55002570181142\" />\r\n      <entry key=\"M30\" value=\"194.40691053893687\" />\r\n      <entry key=\"H1\" value=\"218.77567495941554\" />\r\n      <entry key=\"H2\" value=\"232.70809105240554\" />\r\n      <entry key=\"H4\" value=\"240.1738033184619\" />\r\n      <entry key=\"D1\" value=\"246.66966172388894\" />\r\n      <entry key=\"W1\" value=\"247.809302924534\" />\r\n    </decayedShown>\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 6,\r\n  \"fromUser\": false\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"3MbsDAZNbzReioRsvyhGcFzaqEs\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.typescript.service.memoryLimit.init\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.jshint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.jshint\": \"\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"python.packages.toolwindow.project.migrated.to.right.top.v2\": \"true\",\r\n    \"settings.editor.selected.configurable\": \"org.jetbrains.plugins.github.ui.GithubSettingsConfigurable\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Toni Rose Villanueva\\OneDrive\\ENG1\\GymSync-main\\GymSync\\src\\main\\java\\com\\group3\\gymsync\" />\r\n      <recent name=\"C:\\Users\\Toni Rose Villanueva\\OneDrive\\ENG1\\GymSync-main\\GymSync\\src\\main\\resources\\com\\group3\\gymsync\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-30f59d01ecdd-ac68fc9d2b05-intellij.indexing.shared.core-IU-263.7307.200\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"201befdc-fa41-45fd-8c69-296180c8fb02\" name=\"Changes\" comment=\"\" />\r\n      <created>1795630481795</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1795630481795</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"fix project setup\" />\r\n    <MESSAGE value=\"Initial commit\" />\r\n    <MESSAGE value=\"project setup replaced\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"project setup replaced\" />\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ b/.idea/workspace.xml	(date 1795635480507)
+@@ -4,19 +4,26 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="201befdc-fa41-45fd-8c69-296180c8fb02" name="Changes" comment="project setup replaced">
+-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]/shelved.patch" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]1/shelved.patch" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+-    </list>
++    <list default="true" id="201befdc-fa41-45fd-8c69-296180c8fb02" name="Changes" comment="project setup replaced" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
+   <component name="Git.Settings">
++    <favorite-branches>
++      <branch-storage>
++        <map>
++          <entry type="REMOTE">
++            <value>
++              <list>
++                <branch-info repo="$PROJECT_DIR$" source="upstream/main" />
++              </list>
++            </value>
++          </entry>
++        </map>
++      </branch-storage>
++    </favorite-branches>
+     <option name="PUSH_TAGS">
+       <GitPushTagMode>
+         <option name="argument" value="--tags" />
+@@ -25,7 +32,7 @@
+     </option>
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="main" />
++        <entry key="$PROJECT_DIR$" value="replace-all" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -55,61 +62,61 @@
+   </component>
+   <component name="NextEditCompletionFeaturesState">
+     <decayedCancelled>
+-      <entry key="MS100" value="1.0" />
+-      <entry key="MS500" value="1.0000053088179353" />
+-      <entry key="S2" value="1.2767682066341561" />
+-      <entry key="S5" value="4.423700271274935" />
+-      <entry key="S10" value="10.197474490898063" />
+-      <entry key="S30" value="21.179708914203434" />
+-      <entry key="S60" value="29.17183966341902" />
+-      <entry key="M2" value="41.36491443950242" />
+-      <entry key="M5" value="80.70137466546997" />
+-      <entry key="M10" value="127.76524908515226" />
+-      <entry key="M15" value="154.74469094335205" />
+-      <entry key="M30" value="191.56288805342467" />
+-      <entry key="H1" value="215.05260661724736" />
+-      <entry key="H2" value="228.40656370104645" />
+-      <entry key="H4" value="235.5395633806744" />
+-      <entry key="D1" value="241.73305881247376" />
+-      <entry key="W1" value="242.818421282373" />
++      <entry key="MS100" value="1.025218421157779" />
++      <entry key="MS500" value="1.682848130178934" />
++      <entry key="S2" value="4.443044659832489" />
++      <entry key="S5" value="9.062922625919867" />
++      <entry key="S10" value="13.3528577804952" />
++      <entry key="S30" value="22.774631950611816" />
++      <entry key="S60" value="36.63555931186355" />
++      <entry key="M2" value="58.383927508153775" />
++      <entry key="M5" value="94.43662031417578" />
++      <entry key="M10" value="139.4119439053521" />
++      <entry key="M15" value="177.78975073183906" />
++      <entry key="M30" value="251.5951903972247" />
++      <entry key="H1" value="313.83218123909705" />
++      <entry key="H2" value="354.990652736577" />
++      <entry key="H4" value="378.7665658393201" />
++      <entry key="D1" value="400.4455248405023" />
++      <entry key="W1" value="404.34473806168285" />
+     </decayedCancelled>
+     <decayedSelected>
+       <entry key="MS100" value="0.0" />
+-      <entry key="MS500" value="5.1431979417960465E-102" />
+-      <entry key="S2" value="4.762207446042102E-26" />
+-      <entry key="S5" value="7.432301583674795E-11" />
+-      <entry key="S10" value="8.621079737292064E-6" />
+-      <entry key="S30" value="0.02050472208288203" />
+-      <entry key="S60" value="0.14319503057991656" />
+-      <entry key="M2" value="0.37899958815863083" />
+-      <entry key="M5" value="0.7502440238300919" />
+-      <entry key="M10" value="1.3030735234107256" />
+-      <entry key="M15" value="1.8276786053616978" />
+-      <entry key="M30" value="2.863452066542273" />
+-      <entry key="H1" value="3.7363316090139223" />
+-      <entry key="H2" value="4.309335030095272" />
+-      <entry key="H4" value="4.638483181998497" />
+-      <entry key="D1" value="4.9373616353733825" />
+-      <entry key="W1" value="4.990991353901256" />
++      <entry key="MS500" value="1.1532238500507724E-88" />
++      <entry key="S2" value="1.0569635769445192E-22" />
++      <entry key="S5" value="1.943567567928352E-9" />
++      <entry key="S10" value="5.850511878700987E-5" />
++      <entry key="S30" value="0.06493199079553585" />
++      <entry key="S60" value="0.4134418208506683" />
++      <entry key="M2" value="1.1087145347631215" />
++      <entry key="M5" value="2.322377056919537" />
++      <entry key="M10" value="3.4625060545062776" />
++      <entry key="M15" value="4.272903770093544" />
++      <entry key="M30" value="5.887472995423778" />
++      <entry key="H1" value="7.422770740870743" />
++      <entry key="H2" value="8.538040910790516" />
++      <entry key="H4" value="9.218629973026685" />
++      <entry key="D1" value="9.862074822264809" />
++      <entry key="W1" value="9.98009804398282" />
+     </decayedSelected>
+     <decayedShown>
+-      <entry key="MS100" value="0.2534898699475073" />
+-      <entry key="MS500" value="0.7599675784389375" />
+-      <entry key="S2" value="1.2076003158694426" />
+-      <entry key="S5" value="4.380494464143797" />
+-      <entry key="S10" value="10.161099711340695" />
+-      <entry key="S30" value="21.176983363066874" />
+-      <entry key="S60" value="29.29485151451864" />
+-      <entry key="M2" value="41.72503785448344" />
+-      <entry key="M5" value="81.43304699378798" />
+-      <entry key="M10" value="129.0469857851016" />
+-      <entry key="M15" value="156.55002570181142" />
+-      <entry key="M30" value="194.40691053893687" />
+-      <entry key="H1" value="218.77567495941554" />
+-      <entry key="H2" value="232.70809105240554" />
+-      <entry key="H4" value="240.1738033184619" />
+-      <entry key="D1" value="246.66966172388894" />
+-      <entry key="W1" value="247.809302924534" />
++      <entry key="MS100" value="0.9889819159074725" />
++      <entry key="MS500" value="1.6641173694652238" />
++      <entry key="S2" value="4.404603961389606" />
++      <entry key="S5" value="8.998969682479107" />
++      <entry key="S10" value="13.296797935567339" />
++      <entry key="S30" value="22.80795332051764" />
++      <entry key="S60" value="37.023502513823146" />
++      <entry key="M2" value="59.470851596904275" />
++      <entry key="M5" value="96.74122807653778" />
++      <entry key="M10" value="142.85756108653587" />
++      <entry key="M15" value="182.04518528259632" />
++      <entry key="M30" value="257.46543685779426" />
++      <entry key="H1" value="321.2415313405669" />
++      <entry key="H2" value="363.52011053861827" />
++      <entry key="H4" value="387.98031506192336" />
++      <entry key="D1" value="410.30669173436087" />
++      <entry key="W1" value="414.32470390451516" />
+     </decayedShown>
+   </component>
+   <component name="ProjectColorInfo"><![CDATA[{
+@@ -127,8 +134,9 @@
+     "ModuleVcsDetector.initialDetectionPerformed": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+-    "git-widget-placeholder": "main",
++    "git-widget-placeholder": "replace-all",
+     "kotlin-language-version-configured": "true",
++    "last_opened_file_path": "C:/Users/Toni Rose Villanueva/OneDrive/ENG1/GymSync-main/GymSync/src/main/java/com/group3/gymsync/view",
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.jshint": "true",
+     "node.js.detected.package.tslint": "true",
+@@ -141,6 +149,9 @@
+   }
+ }]]></component>
+   <component name="RecentsManager">
++    <key name="CopyFile.RECENT_KEYS">
++      <recent name="C:\Users\Toni Rose Villanueva\OneDrive\ENG1\GymSync-main\GymSync\src\main\java\com\group3\gymsync\view" />
++    </key>
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="C:\Users\Toni Rose Villanueva\OneDrive\ENG1\GymSync-main\GymSync\src\main\java\com\group3\gymsync" />
+       <recent name="C:\Users\Toni Rose Villanueva\OneDrive\ENG1\GymSync-main\GymSync\src\main\resources\com\group3\gymsync" />

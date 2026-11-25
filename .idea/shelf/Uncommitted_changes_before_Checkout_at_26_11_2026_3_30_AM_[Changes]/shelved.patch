@@ -1,0 +1,1690 @@
+Index: src/main/java/com/group3/gymsync/view/util/PasswordUtil.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/util/PasswordUtil.java b/src/main/java/com/group3/gymsync/view/util/PasswordUtil.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/util/PasswordUtil.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.util;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/gui/PaymentFrame.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/gui/PaymentFrame.java b/src/main/java/com/group3/gymsync/view/gui/PaymentFrame.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/gui/PaymentFrame.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.gui;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/gui/MembershipFrame.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/gui/MembershipFrame.java b/src/main/java/com/group3/gymsync/view/gui/MembershipFrame.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/gui/MembershipFrame.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.gui;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/model/ReportData.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/model/ReportData.java b/src/main/java/com/group3/gymsync/view/model/ReportData.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/model/ReportData.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,130 +0,0 @@
+-package com.group3.gymsync.view.model;
+-
+-import java.math.BigDecimal;
+-import java.util.List;
+-
+-public class ReportData {
+-    private int totalMembers;
+-    private int activeMemberships;
+-    private int expiredMemberships;
+-    private int dailyAttendance;
+-    private BigDecimal totalPayments;
+-    private BigDecimal outstandingBalance;
+-
+-    public ReportData() {
+-        this.totalPayments = BigDecimal.ZERO;
+-        this.outstandingBalance = BigDecimal.ZERO;
+-    }
+-
+-    public void calculateStatistics(List<Member> members, List<Membership> memberships,
+-                                    List<Attendance> attendances, List<Payment> payments) {
+-        this.totalMembers = members != null ? members.size() : 0;
+-
+-        int activeCount = 0;
+-        int expiredCount = 0;
+-        double totalExpectedFees = 0.0;
+-
+-        if (memberships != null) {
+-            for (Membership m : memberships) {
+-                if (m.checkExpiration() || "Expired".equalsIgnoreCase(m.getStatus())) {
+-                    expiredCount++;
+-                } else {
+-                    activeCount++;
+-                }
+-                totalExpectedFees += (m.getActualFee() != null ? m.getActualFee() : m.calculateFee());
+-            }
+-        }
+-        this.activeMemberships = activeCount;
+-        this.expiredMemberships = expiredCount;
+-        this.dailyAttendance = attendances != null ? attendances.size() : 0;
+-
+-        double paidSum = 0.0;
+-        if (payments != null) {
+-            for (Payment p : payments) {
+-                if ("Paid".equalsIgnoreCase(p.getPaymentStatus()) || "Partial".equalsIgnoreCase(p.getPaymentStatus())) {
+-                    paidSum += (p.getAmount() != null ? p.getAmount() : 0.0);
+-                }
+-            }
+-        }
+-
+-        this.totalPayments = BigDecimal.valueOf(paidSum);
+-        double balance = Math.max(0.0, totalExpectedFees - paidSum);
+-        this.outstandingBalance = BigDecimal.valueOf(balance);
+-    }
+-
+-    public void calculateStatistics() {
+-        if (totalPayments == null) {
+-            totalPayments = BigDecimal.ZERO;
+-        }
+-        if (outstandingBalance == null) {
+-            outstandingBalance = BigDecimal.ZERO;
+-        }
+-    }
+-
+-    public String generateSummary() {
+-        return "GymSync Summary -> Total Members: " + totalMembers +
+-               ", Active Memberships: " + activeMemberships +
+-               ", Expired Memberships: " + expiredMemberships +
+-               ", Daily Check-ins: " + dailyAttendance +
+-               ", Total Payments: " + totalPayments +
+-               ", Outstanding Balance: " + outstandingBalance;
+-    }
+-
+-    public String getReportDetails() {
+-        return "=== GymSync Administrative Report ===\n" +
+-               "Total Members        : " + totalMembers + "\n" +
+-               "Active Memberships   : " + activeMemberships + "\n" +
+-               "Expired Memberships  : " + expiredMemberships + "\n" +
+-               "Daily Attendance     : " + dailyAttendance + "\n" +
+-               "Total Payments       : " + totalPayments + "\n" +
+-               "Outstanding Balance  : " + outstandingBalance;
+-    }
+-
+-    public int getTotalMembers() {
+-        return totalMembers;
+-    }
+-
+-    public void setTotalMembers(int totalMembers) {
+-        this.totalMembers = totalMembers;
+-    }
+-
+-    public int getActiveMemberships() {
+-        return activeMemberships;
+-    }
+-
+-    public void setActiveMemberships(int activeMemberships) {
+-        this.activeMemberships = activeMemberships;
+-    }
+-
+-    public int getExpiredMemberships() {
+-        return expiredMemberships;
+-    }
+-
+-    public void setExpiredMemberships(int expiredMemberships) {
+-        this.expiredMemberships = expiredMemberships;
+-    }
+-
+-    public int getDailyAttendance() {
+-        return dailyAttendance;
+-    }
+-
+-    public void setDailyAttendance(int dailyAttendance) {
+-        this.dailyAttendance = dailyAttendance;
+-    }
+-
+-    public BigDecimal getTotalPayments() {
+-        return totalPayments;
+-    }
+-
+-    public void setTotalPayments(BigDecimal totalPayments) {
+-        this.totalPayments = totalPayments;
+-    }
+-
+-    public BigDecimal getOutstandingBalance() {
+-        return outstandingBalance;
+-    }
+-
+-    public void setOutstandingBalance(BigDecimal outstandingBalance) {
+-        this.outstandingBalance = outstandingBalance;
+-    }
+-}
+Index: src/main/java/com/group3/gymsync/view/model/Membership.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/model/Membership.java b/src/main/java/com/group3/gymsync/view/model/Membership.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/model/Membership.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,159 +0,0 @@
+- package com.group3.gymsync.view.model;
+-
+-import model.MembershipPlan;
+-
+-import java.time.LocalDate;
+-import java.time.format.DateTimeParseException;
+-
+-public class Membership {
+-    private int membershipId;
+-    private int memberId;
+-    private MembershipPlan plan;
+-    private String startDate;
+-    private String endDate;
+-    private Double actualFee;
+-    private Double feeOverride;
+-    private String customBenefits;
+-    private String status;
+-
+-    public Membership() {
+-        this.status = "Active";
+-    }
+-
+-    public Membership(int membershipId, int memberId, MembershipPlan plan, String startDate, String endDate,
+-                      Double feeOverride, String customBenefits, String status) {
+-        this.membershipId = membershipId;
+-        this.memberId = memberId;
+-        this.plan = plan;
+-        this.startDate = startDate;
+-        this.endDate = endDate;
+-        this.feeOverride = feeOverride;
+-        this.customBenefits = customBenefits;
+-        this.status = status != null ? status : "Active";
+-        this.actualFee = calculateFee();
+-    }
+-
+-    public Double calculateFee() {
+-        if (feeOverride != null && feeOverride >= 0) {
+-            this.actualFee = feeOverride;
+-        } else if (plan != null && plan.calculateFee() != null) {
+-            this.actualFee = plan.calculateFee();
+-        } else {
+-            this.actualFee = 0.0;
+-        }
+-        return this.actualFee;
+-    }
+-
+-    public boolean checkExpiration() {
+-        if (endDate == null || endDate.isBlank()) {
+-            return false;
+-        }
+-        try {
+-            LocalDate expiration = LocalDate.parse(endDate);
+-            boolean expired = LocalDate.now().isAfter(expiration);
+-            if (expired) {
+-                this.status = "Expired";
+-            }
+-            return expired;
+-        } catch (DateTimeParseException e) {
+-            return "Expired".equalsIgnoreCase(this.status);
+-        }
+-    }
+-
+-    public void renewMembership() {
+-        int daysToAdd = (plan != null && plan.getDurationDays() > 0) ? plan.getDurationDays() : 30;
+-        LocalDate baseDate = LocalDate.now();
+-        if (endDate != null && !endDate.isBlank()) {
+-            try {
+-                LocalDate parsedEnd = LocalDate.parse(endDate);
+-                if (!parsedEnd.isBefore(LocalDate.now())) {
+-                    baseDate = parsedEnd;
+-                }
+-            } catch (DateTimeParseException ignored) {
+-            }
+-        }
+-        this.startDate = LocalDate.now().toString();
+-        this.endDate = baseDate.plusDays(daysToAdd).toString();
+-        this.status = "Active";
+-        calculateFee();
+-    }
+-
+-    public String getMembershipStatus() {
+-        checkExpiration();
+-        return this.status;
+-    }
+-
+-    public int getMembershipId() {
+-        return membershipId;
+-    }
+-
+-    public void setMembershipId(int membershipId) {
+-        this.membershipId = membershipId;
+-    }
+-
+-    public int getMemberId() {
+-        return memberId;
+-    }
+-
+-    public void setMemberId(int memberId) {
+-        this.memberId = memberId;
+-    }
+-
+-    public MembershipPlan getPlan() {
+-        return plan;
+-    }
+-
+-    public void setPlan(MembershipPlan plan) {
+-        this.plan = plan;
+-        calculateFee();
+-    }
+-
+-    public String getStartDate() {
+-        return startDate;
+-    }
+-
+-    public void setStartDate(String startDate) {
+-        this.startDate = startDate;
+-    }
+-
+-    public String getEndDate() {
+-        return endDate;
+-    }
+-
+-    public void setEndDate(String endDate) {
+-        this.endDate = endDate;
+-    }
+-
+-    public Double getActualFee() {
+-        return actualFee;
+-    }
+-
+-    public void setActualFee(Double actualFee) {
+-        this.actualFee = actualFee;
+-    }
+-
+-    public Double getFeeOverride() {
+-        return feeOverride;
+-    }
+-
+-    public void setFeeOverride(Double feeOverride) {
+-        this.feeOverride = feeOverride;
+-        calculateFee();
+-    }
+-
+-    public String getCustomBenefits() {
+-        return customBenefits;
+-    }
+-
+-    public void setCustomBenefits(String customBenefits) {
+-        this.customBenefits = customBenefits;
+-    }
+-
+-    public String getStatus() {
+-        return status;
+-    }
+-
+-    public void setStatus(String status) {
+-        this.status = status;
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/dao/AdminDAO.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/dao/AdminDAO.java b/src/main/java/com/group3/gymsync/view/dao/AdminDAO.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/dao/AdminDAO.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.dao;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/Main.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/Main.java b/src/main/java/com/group3/gymsync/view/Main.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/Main.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view;
+\ No newline at end of file
+Index: pom.xml
+===================================================================
+diff --git a/pom.xml b/pom.xml
+deleted file mode 100644
+--- a/pom.xml	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,139 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project xmlns="http://maven.apache.org/POM/4.0.0"
+-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+-    <modelVersion>4.0.0</modelVersion>
+-
+-    <groupId>com.group3</groupId>
+-    <artifactId>gymsync</artifactId>
+-    <version>1.0-SNAPSHOT</version>
+-    <name>gymsync</name>
+-
+-    <properties>
+-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+-        <junit.version>5.12.1</junit.version>
+-    </properties>
+-
+-    <dependencies>
+-        <dependency>
+-            <groupId>org.xerial</groupId>
+-            <artifactId>sqlite-jdbc</artifactId>
+-            <version>3.50.3.0</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.openjfx</groupId>
+-            <artifactId>javafx-controls</artifactId>
+-            <version>25.0.2</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.openjfx</groupId>
+-            <artifactId>javafx-fxml</artifactId>
+-            <version>25.0.2</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.openjfx</groupId>
+-            <artifactId>javafx-web</artifactId>
+-            <version>25.0.2</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.openjfx</groupId>
+-            <artifactId>javafx-swing</artifactId>
+-            <version>25.0.2</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.controlsfx</groupId>
+-            <artifactId>controlsfx</artifactId>
+-            <version>11.2.1</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>com.dlsc.formsfx</groupId>
+-            <artifactId>formsfx-core</artifactId>
+-            <version>11.6.0</version>
+-            <exclusions>
+-                <exclusion>
+-                    <groupId>org.openjfx</groupId>
+-                    <artifactId>*</artifactId>
+-                </exclusion>
+-            </exclusions>
+-        </dependency>
+-        <dependency>
+-            <groupId>net.synedra</groupId>
+-            <artifactId>validatorfx</artifactId>
+-            <version>0.6.1</version>
+-            <exclusions>
+-                <exclusion>
+-                    <groupId>org.openjfx</groupId>
+-                    <artifactId>*</artifactId>
+-                </exclusion>
+-            </exclusions>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.kordamp.ikonli</groupId>
+-            <artifactId>ikonli-javafx</artifactId>
+-            <version>12.3.1</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.kordamp.bootstrapfx</groupId>
+-            <artifactId>bootstrapfx-core</artifactId>
+-            <version>0.4.0</version>
+-        </dependency>
+-        <dependency>
+-            <groupId>eu.hansolo</groupId>
+-            <artifactId>tilesfx</artifactId>
+-            <version>21.0.9</version>
+-            <exclusions>
+-                <exclusion>
+-                    <groupId>org.openjfx</groupId>
+-                    <artifactId>*</artifactId>
+-                </exclusion>
+-            </exclusions>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.junit.jupiter</groupId>
+-            <artifactId>junit-jupiter-api</artifactId>
+-            <version>${junit.version}</version>
+-            <scope>test</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.junit.jupiter</groupId>
+-            <artifactId>junit-jupiter-engine</artifactId>
+-            <version>${junit.version}</version>
+-            <scope>test</scope>
+-        </dependency>
+-    </dependencies>
+-
+-    <build>
+-        <plugins>
+-            <plugin>
+-                <groupId>org.apache.maven.plugins</groupId>
+-                <artifactId>maven-compiler-plugin</artifactId>
+-                <version>3.13.0</version>
+-                <configuration>
+-                    <source>11</source>
+-                    <target>11</target>
+-                </configuration>
+-            </plugin>
+-            <plugin>
+-                <groupId>org.openjfx</groupId>
+-                <artifactId>javafx-maven-plugin</artifactId>
+-                <version>0.0.8</version>
+-                <executions>
+-                    <execution>
+-                        <!-- Default configuration for running with: mvn clean javafx:run -->
+-                        <id>default-cli</id>
+-                        <configuration>
+-                            <mainClass>com.group3.gymsync/com.group3.gymsync.HelloApplication</mainClass>
+-                            <launcher>app</launcher>
+-                            <jlinkZipName>app</jlinkZipName>
+-                            <jlinkImageName>app</jlinkImageName>
+-                            <noManPages>true</noManPages>
+-                            <stripDebug>true</stripDebug>
+-                            <noHeaderFiles>true</noHeaderFiles>
+-                        </configuration>
+-                    </execution>
+-                </executions>
+-            </plugin>
+-        </plugins>
+-    </build>
+-</project>
+-
+Index: src/main/java/com/group3/gymsync/view/model/Payment.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/model/Payment.java b/src/main/java/com/group3/gymsync/view/model/Payment.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/model/Payment.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,124 +0,0 @@
+- package com.group3.gymsync.view.model;
+-
+-import java.time.LocalDate;
+-
+-public class Payment {
+-    private int paymentId;
+-    private int membershipId;
+-    private int adminId;
+-    private Double amount;
+-    private String paymentDate;
+-    private String paymentMethod;
+-    private String paymentStatus;
+-
+-    public Payment() {
+-        this.paymentStatus = "Unpaid";
+-    }
+-
+-    public Payment(int paymentId, int membershipId, int adminId, Double amount,
+-                   String paymentDate, String paymentMethod, String paymentStatus) {
+-        this.paymentId = paymentId;
+-        this.membershipId = membershipId;
+-        this.adminId = adminId;
+-        setAmount(amount);
+-        this.paymentDate = paymentDate;
+-        this.paymentMethod = paymentMethod;
+-        this.paymentStatus = paymentStatus != null ? paymentStatus : "Unpaid";
+-    }
+-
+-    public void recordPayment() {
+-        if (this.amount == null || this.amount <= 0) {
+-            throw new IllegalArgumentException("Payment amount must be greater than zero.");
+-        }
+-        if (this.paymentDate == null || this.paymentDate.isBlank()) {
+-            this.paymentDate = LocalDate.now().toString();
+-        }
+-        this.paymentStatus = "Paid";
+-    }
+-
+-    public Double calculateBalance(Double requiredFee) {
+-        double fee = requiredFee != null ? requiredFee : 0.0;
+-        double paid = this.amount != null ? this.amount : 0.0;
+-        return Math.max(0.0, fee - paid);
+-    }
+-
+-    public Double calculateBalance() {
+-        return this.amount != null ? this.amount : 0.0;
+-    }
+-
+-    public void updatePaymentStatus(Double requiredFee) {
+-        double balance = calculateBalance(requiredFee);
+-        if (balance <= 0.0 && (this.amount != null && this.amount > 0)) {
+-            this.paymentStatus = "Paid";
+-        } else if (this.amount != null && this.amount > 0) {
+-            this.paymentStatus = "Partial";
+-        } else {
+-            this.paymentStatus = "Unpaid";
+-        }
+-    }
+-
+-    public void updatePaymentStatus() {
+-        if (this.amount != null && this.amount > 0 && "Unpaid".equalsIgnoreCase(this.paymentStatus)) {
+-            this.paymentStatus = "Paid";
+-        }
+-    }
+-
+-    public int getPaymentId() {
+-        return paymentId;
+-    }
+-
+-    public void setPaymentId(int paymentId) {
+-        this.paymentId = paymentId;
+-    }
+-
+-    public int getMembershipId() {
+-        return membershipId;
+-    }
+-
+-    public void setMembershipId(int membershipId) {
+-        this.membershipId = membershipId;
+-    }
+-
+-    public int getAdminId() {
+-        return adminId;
+-    }
+-
+-    public void setAdminId(int adminId) {
+-        this.adminId = adminId;
+-    }
+-
+-    public Double getAmount() {
+-        return amount;
+-    }
+-
+-    public void setAmount(Double amount) {
+-        if (amount != null && amount < 0) {
+-            throw new IllegalArgumentException("Amount cannot be negative.");
+-        }
+-        this.amount = amount;
+-    }
+-
+-    public String getPaymentDate() {
+-        return paymentDate;
+-    }
+-
+-    public void setPaymentDate(String paymentDate) {
+-        this.paymentDate = paymentDate;
+-    }
+-
+-    public String getPaymentMethod() {
+-        return paymentMethod;
+-    }
+-
+-    public void setPaymentMethod(String paymentMethod) {
+-        this.paymentMethod = paymentMethod;
+-    }
+-
+-    public String getPaymentStatus() {
+-        return paymentStatus;
+-    }
+-
+-    public void setPaymentStatus(String paymentStatus) {
+-        this.paymentStatus = paymentStatus;
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/dao/AttendanceDAO.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/dao/AttendanceDAO.java b/src/main/java/com/group3/gymsync/view/dao/AttendanceDAO.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/dao/AttendanceDAO.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.dao;
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+deleted file mode 100644
+--- a/.idea/workspace.xml	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,175 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="AutoImportSettings">
+-    <option name="autoReloadType" value="SELECTIVE" />
+-  </component>
+-  <component name="ChangeListManager">
+-    <list default="true" id="201befdc-fa41-45fd-8c69-296180c8fb02" name="Changes" comment="project setup replaced">
+-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]/shelved.patch" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]1/shelved.patch" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+-    </list>
+-    <option name="SHOW_DIALOG" value="false" />
+-    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+-    <option name="LAST_RESOLUTION" value="IGNORE" />
+-  </component>
+-  <component name="Git.Settings">
+-    <option name="PUSH_TAGS">
+-      <GitPushTagMode>
+-        <option name="argument" value="--tags" />
+-        <option name="title" value="All" />
+-      </GitPushTagMode>
+-    </option>
+-    <option name="RECENT_BRANCH_BY_REPOSITORY">
+-      <map>
+-        <entry key="$PROJECT_DIR$" value="main" />
+-      </map>
+-    </option>
+-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+-    <option name="UPDATE_TYPE" value="REBASE" />
+-  </component>
+-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+-  "lastFilter": {
+-    "state": "OPEN",
+-    "assignee": "Aji-09"
+-  }
+-}]]></component>
+-  <component name="GithubDefaultAccount">
+-    <option name="defaultAccountId" value="f706aa07-31af-497a-83f5-75eea0de07b6" />
+-  </component>
+-  <component name="GithubPullRequestsUISettings"><![CDATA[{
+-  "selectedUrlAndAccountId": {
+-    "url": "https://github.com/Aji-09/GymSync_Villanueva_FORKED",
+-    "accountId": "f706aa07-31af-497a-83f5-75eea0de07b6"
+-  }
+-}]]></component>
+-  <component name="MavenImportPreferences">
+-    <option name="generalSettings">
+-      <MavenGeneralSettings>
+-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+-      </MavenGeneralSettings>
+-    </option>
+-  </component>
+-  <component name="NextEditCompletionFeaturesState">
+-    <decayedCancelled>
+-      <entry key="MS100" value="1.0" />
+-      <entry key="MS500" value="1.0000053088179353" />
+-      <entry key="S2" value="1.2767682066341561" />
+-      <entry key="S5" value="4.423700271274935" />
+-      <entry key="S10" value="10.197474490898063" />
+-      <entry key="S30" value="21.179708914203434" />
+-      <entry key="S60" value="29.17183966341902" />
+-      <entry key="M2" value="41.36491443950242" />
+-      <entry key="M5" value="80.70137466546997" />
+-      <entry key="M10" value="127.76524908515226" />
+-      <entry key="M15" value="154.74469094335205" />
+-      <entry key="M30" value="191.56288805342467" />
+-      <entry key="H1" value="215.05260661724736" />
+-      <entry key="H2" value="228.40656370104645" />
+-      <entry key="H4" value="235.5395633806744" />
+-      <entry key="D1" value="241.73305881247376" />
+-      <entry key="W1" value="242.818421282373" />
+-    </decayedCancelled>
+-    <decayedSelected>
+-      <entry key="MS100" value="0.0" />
+-      <entry key="MS500" value="5.1431979417960465E-102" />
+-      <entry key="S2" value="4.762207446042102E-26" />
+-      <entry key="S5" value="7.432301583674795E-11" />
+-      <entry key="S10" value="8.621079737292064E-6" />
+-      <entry key="S30" value="0.02050472208288203" />
+-      <entry key="S60" value="0.14319503057991656" />
+-      <entry key="M2" value="0.37899958815863083" />
+-      <entry key="M5" value="0.7502440238300919" />
+-      <entry key="M10" value="1.3030735234107256" />
+-      <entry key="M15" value="1.8276786053616978" />
+-      <entry key="M30" value="2.863452066542273" />
+-      <entry key="H1" value="3.7363316090139223" />
+-      <entry key="H2" value="4.309335030095272" />
+-      <entry key="H4" value="4.638483181998497" />
+-      <entry key="D1" value="4.9373616353733825" />
+-      <entry key="W1" value="4.990991353901256" />
+-    </decayedSelected>
+-    <decayedShown>
+-      <entry key="MS100" value="0.2534898699475073" />
+-      <entry key="MS500" value="0.7599675784389375" />
+-      <entry key="S2" value="1.2076003158694426" />
+-      <entry key="S5" value="4.380494464143797" />
+-      <entry key="S10" value="10.161099711340695" />
+-      <entry key="S30" value="21.176983363066874" />
+-      <entry key="S60" value="29.29485151451864" />
+-      <entry key="M2" value="41.72503785448344" />
+-      <entry key="M5" value="81.43304699378798" />
+-      <entry key="M10" value="129.0469857851016" />
+-      <entry key="M15" value="156.55002570181142" />
+-      <entry key="M30" value="194.40691053893687" />
+-      <entry key="H1" value="218.77567495941554" />
+-      <entry key="H2" value="232.70809105240554" />
+-      <entry key="H4" value="240.1738033184619" />
+-      <entry key="D1" value="246.66966172388894" />
+-      <entry key="W1" value="247.809302924534" />
+-    </decayedShown>
+-  </component>
+-  <component name="ProjectColorInfo"><![CDATA[{
+-  "associatedIndex": 6,
+-  "fromUser": false
+-}]]></component>
+-  <component name="ProjectId" id="3MbsDAZNbzReioRsvyhGcFzaqEs" />
+-  <component name="ProjectViewState">
+-    <option name="hideEmptyMiddlePackages" value="true" />
+-    <option name="showLibraryContents" value="true" />
+-  </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "ModuleVcsDetector.initialDetectionPerformed": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+-    "git-widget-placeholder": "main",
+-    "kotlin-language-version-configured": "true",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.jshint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.jshint": "",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "python.packages.toolwindow.project.migrated.to.right.top.v2": "true",
+-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+-  }
+-}]]></component>
+-  <component name="RecentsManager">
+-    <key name="MoveFile.RECENT_KEYS">
+-      <recent name="C:\Users\Toni Rose Villanueva\OneDrive\ENG1\GymSync-main\GymSync\src\main\java\com\group3\gymsync" />
+-      <recent name="C:\Users\Toni Rose Villanueva\OneDrive\ENG1\GymSync-main\GymSync\src\main\resources\com\group3\gymsync" />
+-    </key>
+-  </component>
+-  <component name="SharedIndexes">
+-    <attachedChunks>
+-      <set>
+-        <option value="bundled-jdk-30f59d01ecdd-ac68fc9d2b05-intellij.indexing.shared.core-IU-263.7307.200" />
+-      </set>
+-    </attachedChunks>
+-  </component>
+-  <component name="TaskManager">
+-    <task active="true" id="Default" summary="Default task">
+-      <changelist id="201befdc-fa41-45fd-8c69-296180c8fb02" name="Changes" comment="" />
+-      <created>1795630481795</created>
+-      <option name="number" value="Default" />
+-      <option name="presentableId" value="Default" />
+-      <updated>1795630481795</updated>
+-    </task>
+-    <servers />
+-  </component>
+-  <component name="TypeScriptGeneratedFilesManager">
+-    <option name="version" value="3" />
+-  </component>
+-  <component name="VcsManagerConfiguration">
+-    <MESSAGE value="fix project setup" />
+-    <MESSAGE value="Initial commit" />
+-    <MESSAGE value="project setup replaced" />
+-    <option name="LAST_COMMIT_MESSAGE" value="project setup replaced" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/gui/LoginFrame.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/gui/LoginFrame.java b/src/main/java/com/group3/gymsync/view/gui/LoginFrame.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/gui/LoginFrame.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.gui;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/dao/MemberDAO.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/dao/MemberDAO.java b/src/main/java/com/group3/gymsync/view/dao/MemberDAO.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/dao/MemberDAO.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.dao;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/gui/AttendanceFrame.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/gui/AttendanceFrame.java b/src/main/java/com/group3/gymsync/view/gui/AttendanceFrame.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/gui/AttendanceFrame.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.gui;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/util/IDGenerator.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/util/IDGenerator.java b/src/main/java/com/group3/gymsync/view/util/IDGenerator.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/util/IDGenerator.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.util;
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]/shelved.patch	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,130 +0,0 @@
+-Index: .idea/workspace.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"201befdc-fa41-45fd-8c69-296180c8fb02\" name=\"Changes\" comment=\"fix project setup\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PUSH_TAGS\">\r\n      <GitPushTagMode>\r\n        <option name=\"argument\" value=\"--tags\" />\r\n        <option name=\"title\" value=\"All\" />\r\n      </GitPushTagMode>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\"><![CDATA[{\r\n  \"lastFilter\": {\r\n    \"state\": \"OPEN\",\r\n    \"assignee\": \"Aji-09\"\r\n  }\r\n}]]></component>\r\n  <component name=\"GithubDefaultAccount\">\r\n    <option name=\"defaultAccountId\" value=\"f706aa07-31af-497a-83f5-75eea0de07b6\" />\r\n  </component>\r\n  <component name=\"GithubPullRequestsUISettings\"><![CDATA[{\r\n  \"selectedUrlAndAccountId\": {\r\n    \"url\": \"https://github.com/Aji-09/GymSync_Villanueva_FORKED\",\r\n    \"accountId\": \"f706aa07-31af-497a-83f5-75eea0de07b6\"\r\n  }\r\n}]]></component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"mavenHomeTypeForPersistence\" value=\"WRAPPER\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"NextEditCompletionFeaturesState\">\r\n    <decayedCancelled>\r\n      <entry key=\"MS100\" value=\"1.0068167961060142\" />\r\n      <entry key=\"MS500\" value=\"1.5401813903151105\" />\r\n      <entry key=\"S2\" value=\"2.5399014584074164\" />\r\n      <entry key=\"S5\" value=\"3.6891297147849027\" />\r\n      <entry key=\"S10\" value=\"4.800565299893144\" />\r\n      <entry key=\"S30\" value=\"6.089473051671414\" />\r\n      <entry key=\"S60\" value=\"6.532562653851717\" />\r\n      <entry key=\"M2\" value=\"7.08447313978042\" />\r\n      <entry key=\"M5\" value=\"9.5221614616689\" />\r\n      <entry key=\"M10\" value=\"12.469363339811212\" />\r\n      <entry key=\"M15\" value=\"14.090746748395443\" />\r\n      <entry key=\"M30\" value=\"16.212360312876985\" />\r\n      <entry key=\"H1\" value=\"17.510521906761372\" />\r\n      <entry key=\"H2\" value=\"18.229585215120274\" />\r\n      <entry key=\"H4\" value=\"18.608138797553405\" />\r\n      <entry key=\"D1\" value=\"18.933744997170777\" />\r\n      <entry key=\"W1\" value=\"18.990511587105683\" />\r\n    </decayedCancelled>\r\n    <decayedSelected>\r\n      <entry key=\"MS100\" value=\"1.854729820216397E-11\" />\r\n      <entry key=\"MS500\" value=\"0.007139308204917191\" />\r\n      <entry key=\"S2\" value=\"0.2906792511760306\" />\r\n      <entry key=\"S5\" value=\"0.6100502551361116\" />\r\n      <entry key=\"S10\" value=\"0.7810571394821968\" />\r\n      <entry key=\"S30\" value=\"0.9209320985968188\" />\r\n      <entry key=\"S60\" value=\"0.959854849620106\" />\r\n      <entry key=\"M2\" value=\"1.0032249979977017\" />\r\n      <entry key=\"M5\" value=\"1.4183391799928047\" />\r\n      <entry key=\"M10\" value=\"2.1245073144556375\" />\r\n      <entry key=\"M15\" value=\"2.5598496074904746\" />\r\n      <entry key=\"M30\" value=\"3.1631855665554682\" />\r\n      <entry key=\"H1\" value=\"3.547413486271086\" />\r\n      <entry key=\"H2\" value=\"3.7644434299658402\" />\r\n      <entry key=\"H4\" value=\"3.879809428919917\" />\r\n      <entry key=\"D1\" value=\"3.9796246819232017\" />\r\n      <entry key=\"W1\" value=\"3.9970807133082875\" />\r\n    </decayedSelected>\r\n    <decayedShown>\r\n      <entry key=\"MS100\" value=\"0.09159385194603951\" />\r\n      <entry key=\"MS500\" value=\"1.0388399631275487\" />\r\n      <entry key=\"S2\" value=\"2.33773017197975\" />\r\n      <entry key=\"S5\" value=\"3.8625656866017284\" />\r\n      <entry key=\"S10\" value=\"5.272959782896418\" />\r\n      <entry key=\"S30\" value=\"6.877133468134947\" />\r\n      <entry key=\"S60\" value=\"7.42100184222635\" />\r\n      <entry key=\"M2\" value=\"8.047730058323983\" />\r\n      <entry key=\"M5\" value=\"10.90302022228128\" />\r\n      <entry key=\"M10\" value=\"14.556250941470909\" />\r\n      <entry key=\"M15\" value=\"16.61767040778316\" />\r\n      <entry key=\"M30\" value=\"19.353611780737747\" />\r\n      <entry key=\"H1\" value=\"21.045218160261175\" />\r\n      <entry key=\"H2\" value=\"21.987174565391147\" />\r\n      <entry key=\"H4\" value=\"22.484389342886175\" />\r\n      <entry key=\"D1\" value=\"22.912757505816067\" />\r\n      <entry key=\"W1\" value=\"22.987504371568722\" />\r\n    </decayedShown>\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 6,\r\n  \"fromUser\": false\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"3MbsDAZNbzReioRsvyhGcFzaqEs\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.typescript.service.memoryLimit.init\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.jshint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.jshint\": \"\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"python.packages.toolwindow.project.migrated.to.right.top.v2\": \"true\",\r\n    \"settings.editor.selected.configurable\": \"org.jetbrains.plugins.github.ui.GithubSettingsConfigurable\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Toni Rose Villanueva\\OneDrive\\ENG1\\GymSync-main\\GymSync\\src\\main\\java\\com\\group3\\gymsync\" />\r\n      <recent name=\"C:\\Users\\Toni Rose Villanueva\\OneDrive\\ENG1\\GymSync-main\\GymSync\\src\\main\\resources\\com\\group3\\gymsync\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-30f59d01ecdd-ac68fc9d2b05-intellij.indexing.shared.core-IU-263.7307.200\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"201befdc-fa41-45fd-8c69-296180c8fb02\" name=\"Changes\" comment=\"\" />\r\n      <created>1795630481795</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1795630481795</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"fix project setup\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"fix project setup\" />\r\n  </component>\r\n</project>
+-===================================================================
+-diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+---- a/.idea/workspace.xml	(revision dc5c2246f877b9cc2609e639bdd228b6099f65bd)
+-+++ b/.idea/workspace.xml	(date 1795633326904)
+-@@ -43,61 +43,61 @@
+-   </component>
+-   <component name="NextEditCompletionFeaturesState">
+-     <decayedCancelled>
+--      <entry key="MS100" value="1.0068167961060142" />
+--      <entry key="MS500" value="1.5401813903151105" />
+--      <entry key="S2" value="2.5399014584074164" />
+--      <entry key="S5" value="3.6891297147849027" />
+--      <entry key="S10" value="4.800565299893144" />
+--      <entry key="S30" value="6.089473051671414" />
+--      <entry key="S60" value="6.532562653851717" />
+--      <entry key="M2" value="7.08447313978042" />
+--      <entry key="M5" value="9.5221614616689" />
+--      <entry key="M10" value="12.469363339811212" />
+--      <entry key="M15" value="14.090746748395443" />
+--      <entry key="M30" value="16.212360312876985" />
+--      <entry key="H1" value="17.510521906761372" />
+--      <entry key="H2" value="18.229585215120274" />
+--      <entry key="H4" value="18.608138797553405" />
+--      <entry key="D1" value="18.933744997170777" />
+--      <entry key="W1" value="18.990511587105683" />
+-+      <entry key="MS100" value="1.0000000000000036" />
+-+      <entry key="MS500" value="1.0014637523863643" />
+-+      <entry key="S2" value="1.6624353096302835" />
+-+      <entry key="S5" value="6.551764757020347" />
+-+      <entry key="S10" value="16.998516464789095" />
+-+      <entry key="S30" value="43.22129050093872" />
+-+      <entry key="S60" value="66.83521009055707" />
+-+      <entry key="M2" value="93.56121942759627" />
+-+      <entry key="M5" value="122.95463734657429" />
+-+      <entry key="M10" value="138.94420913721993" />
+-+      <entry key="M15" value="146.07718902497496" />
+-+      <entry key="M30" value="154.8194209203667" />
+-+      <entry key="H1" value="160.03575830553777" />
+-+      <entry key="H2" value="162.91376182705758" />
+-+      <entry key="H4" value="164.4293735868158" />
+-+      <entry key="D1" value="165.7342753545568" />
+-+      <entry key="W1" value="165.96194072401966" />
+-     </decayedCancelled>
+-     <decayedSelected>
+--      <entry key="MS100" value="1.854729820216397E-11" />
+--      <entry key="MS500" value="0.007139308204917191" />
+--      <entry key="S2" value="0.2906792511760306" />
+--      <entry key="S5" value="0.6100502551361116" />
+--      <entry key="S10" value="0.7810571394821968" />
+--      <entry key="S30" value="0.9209320985968188" />
+--      <entry key="S60" value="0.959854849620106" />
+--      <entry key="M2" value="1.0032249979977017" />
+--      <entry key="M5" value="1.4183391799928047" />
+--      <entry key="M10" value="2.1245073144556375" />
+--      <entry key="M15" value="2.5598496074904746" />
+--      <entry key="M30" value="3.1631855665554682" />
+--      <entry key="H1" value="3.547413486271086" />
+--      <entry key="H2" value="3.7644434299658402" />
+--      <entry key="H4" value="3.879809428919917" />
+--      <entry key="D1" value="3.9796246819232017" />
+--      <entry key="W1" value="3.9970807133082875" />
+-+      <entry key="MS100" value="0.0" />
+-+      <entry key="MS500" value="0.0" />
+-+      <entry key="S2" value="9.064584674647852E-94" />
+-+      <entry key="S5" value="6.066513439766677E-38" />
+-+      <entry key="S10" value="2.463029321743185E-19" />
+-+      <entry key="S30" value="6.268397597679918E-7" />
+-+      <entry key="S60" value="7.918994221562961E-4" />
+-+      <entry key="M2" value="0.02881579305303535" />
+-+      <entry key="M5" value="0.3428254008359238" />
+-+      <entry key="M10" value="1.0444909392540673" />
+-+      <entry key="M15" value="1.594576704861362" />
+-+      <entry key="M30" value="2.49654933332713" />
+-+      <entry key="H1" value="3.1515162717894407" />
+-+      <entry key="H2" value="3.548171847375742" />
+-+      <entry key="H4" value="3.766711252129926" />
+-+      <entry key="D1" value="3.960050931875237" />
+-+      <entry key="W1" value="3.9942662597383807" />
+-     </decayedSelected>
+-     <decayedShown>
+--      <entry key="MS100" value="0.09159385194603951" />
+--      <entry key="MS500" value="1.0388399631275487" />
+--      <entry key="S2" value="2.33773017197975" />
+--      <entry key="S5" value="3.8625656866017284" />
+--      <entry key="S10" value="5.272959782896418" />
+--      <entry key="S30" value="6.877133468134947" />
+--      <entry key="S60" value="7.42100184222635" />
+--      <entry key="M2" value="8.047730058323983" />
+--      <entry key="M5" value="10.90302022228128" />
+--      <entry key="M10" value="14.556250941470909" />
+--      <entry key="M15" value="16.61767040778316" />
+--      <entry key="M30" value="19.353611780737747" />
+--      <entry key="H1" value="21.045218160261175" />
+--      <entry key="H2" value="21.987174565391147" />
+--      <entry key="H4" value="22.484389342886175" />
+--      <entry key="D1" value="22.912757505816067" />
+--      <entry key="W1" value="22.987504371568722" />
+-+      <entry key="MS100" value="2.190429530509495E-11" />
+-+      <entry key="MS500" value="0.008025043618328377" />
+-+      <entry key="S2" value="0.8782029514171271" />
+-+      <entry key="S5" value="6.042170021735237" />
+-+      <entry key="S10" value="16.675991461216682" />
+-+      <entry key="S30" value="43.08275890480485" />
+-+      <entry key="S60" value="66.75408000464388" />
+-+      <entry key="M2" value="93.5404343378288" />
+-+      <entry key="M5" value="123.26578087054082" />
+-+      <entry key="M10" value="139.95815419437386" />
+-+      <entry key="M15" value="147.6430385575944" />
+-+      <entry key="M30" value="157.29445332207436" />
+-+      <entry key="H1" value="163.17384863964716" />
+-+      <entry key="H2" value="166.45440293422055" />
+-+      <entry key="H4" value="168.19209285099993" />
+-+      <entry key="D1" value="169.69362742172973" />
+-+      <entry key="W1" value="169.95610629659947" />
+-     </decayedShown>
+-   </component>
+-   <component name="ProjectColorInfo"><![CDATA[{
+-@@ -115,7 +115,7 @@
+-     "ModuleVcsDetector.initialDetectionPerformed": "true",
+-     "RunOnceActivity.ShowReadmeOnStart": "true",
+-     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+--    "git-widget-placeholder": "main",
+-+    "git-widget-placeholder": "replace-project",
+-     "kotlin-language-version-configured": "true",
+-     "node.js.detected.package.eslint": "true",
+-     "node.js.detected.package.jshint": "true",
+Index: src/main/java/com/group3/gymsync/view/dao/PaymentDAO.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/dao/PaymentDAO.java b/src/main/java/com/group3/gymsync/view/dao/PaymentDAO.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/dao/PaymentDAO.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.dao;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/model/MonthlyMembershipPlan.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/model/MonthlyMembershipPlan.java b/src/main/java/com/group3/gymsync/view/model/MonthlyMembershipPlan.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/model/MonthlyMembershipPlan.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,40 +0,0 @@
+- package com.group3.gymsync.view.model;
+-
+-public class MonthlyMembershipPlan extends MembershipPlan {
+-    private int months;
+-
+-    public MonthlyMembershipPlan() {
+-        super();
+-        this.months = 1;
+-        this.durationDays = 30;
+-    }
+-
+-    public MonthlyMembershipPlan(int planId, String planName, Double baseFee, int months, String description, String benefit) {
+-        super(planId, planName, baseFee, Math.max(1, months) * 30, description, benefit);
+-        setMonths(months);
+-    }
+-
+-    @Override
+-    public Double calculateFee() {
+-        double fee = baseFee != null ? baseFee : 0.0;
+-        return fee * Math.max(1, months);
+-    }
+-
+-    @Override
+-    public String getBenefits() {
+-        String baseBenefit = (benefit != null && !benefit.isEmpty()) ? benefit : "Unlimited gym access & progress tracking";
+-        return "Monthly Plan Benefits (" + months + " mo): " + baseBenefit;
+-    }
+-
+-    public int getMonths() {
+-        return months;
+-    }
+-
+-    public void setMonths(int months) {
+-        if (months <= 0) {
+-            throw new IllegalArgumentException("Months must be greater than zero.");
+-        }
+-        this.months = months;
+-        this.durationDays = months * 30;
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/service/AttendanceService.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/service/AttendanceService.java b/src/main/java/com/group3/gymsync/view/service/AttendanceService.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/service/AttendanceService.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,5 +0,0 @@
+-package com.group3.gymsync.view.service;
+-
+-public class AttendanceService {
+-    
+-}
+Index: src/main/java/com/group3/gymsync/view/service/AuthenticationService.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/service/AuthenticationService.java b/src/main/java/com/group3/gymsync/view/service/AuthenticationService.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/service/AuthenticationService.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,5 +0,0 @@
+-package com.group3.gymsync.view.service;
+-
+-public class AuthenticationService {
+-    
+-}
+Index: src/main/java/com/group3/gymsync/view/gui/DashboardFrame.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/gui/DashboardFrame.java b/src/main/java/com/group3/gymsync/view/gui/DashboardFrame.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/gui/DashboardFrame.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.gui;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/service/ReportService.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/service/ReportService.java b/src/main/java/com/group3/gymsync/view/service/ReportService.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/service/ReportService.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,5 +0,0 @@
+-package com.group3.gymsync.view.service;
+-
+-public class ReportService {
+-    
+-}
+Index: src/main/java/com/group3/gymsync/view/dao/MembershipDAO.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/dao/MembershipDAO.java b/src/main/java/com/group3/gymsync/view/dao/MembershipDAO.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/dao/MembershipDAO.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.dao;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/model/DailyMembershipPlan.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/model/DailyMembershipPlan.java b/src/main/java/com/group3/gymsync/view/model/DailyMembershipPlan.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/model/DailyMembershipPlan.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,24 +0,0 @@
+-package com.group3.gymsync.view.model;
+-
+-public class DailyMembershipPlan extends MembershipPlan {
+-
+-    public DailyMembershipPlan() {
+-        super();
+-        this.durationDays = 1;
+-    }
+-
+-    public DailyMembershipPlan(int planId, String planName, Double baseFee, String description, String benefit) {
+-        super(planId, planName, baseFee, 1, description, benefit);
+-    }
+-
+-    @Override
+-    public Double calculateFee() {
+-        return baseFee != null ? baseFee : 0.0;
+-    }
+-
+-    @Override
+-    public String getBenefits() {
+-        String baseBenefit = (benefit != null && !benefit.isEmpty()) ? benefit : "Single-day gym floor access";
+-        return "Daily Plan Benefits: " + baseBenefit + " (Valid for 1 day)";
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/model/Admin.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/model/Admin.java b/src/main/java/com/group3/gymsync/view/model/Admin.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/model/Admin.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,109 +0,0 @@
+- package com.group3.gymsync.view.model;
+-
+-public class Admin {
+-    private int adminId;
+-    private String username;
+-    private String passwordHash;
+-    private String fullName;
+-    private String role;
+-    private boolean active;
+-    private boolean loggedIn;
+-
+-    public Admin() {
+-        this.active = true;
+-        this.role = "Administrator";
+-    }
+-
+-    public Admin(int adminId, String username, String passwordHash, String fullName, String role, boolean active) {
+-        this.adminId = adminId;
+-        this.username = username;
+-        this.passwordHash = passwordHash;
+-        this.fullName = fullName;
+-        this.role = role;
+-        this.active = active;
+-    }
+-
+-    public boolean login(String inputUsername, String inputPasswordHash) {
+-        if (!active || inputUsername == null || inputPasswordHash == null) {
+-            this.loggedIn = false;
+-            return false;
+-        }
+-        this.loggedIn = inputUsername.equals(this.username) && inputPasswordHash.equals(this.passwordHash);
+-        return this.loggedIn;
+-    }
+-
+-    public boolean login() {
+-        this.loggedIn = this.active && this.username != null && !this.username.isBlank();
+-        return this.loggedIn;
+-    }
+-
+-    public void logout() {
+-        this.loggedIn = false;
+-    }
+-
+-    public void changePassword(String currentPasswordHash, String newPasswordHash) {
+-        if (currentPasswordHash == null || !currentPasswordHash.equals(this.passwordHash)) {
+-            throw new IllegalArgumentException("Current password is incorrect.");
+-        }
+-        if (newPasswordHash == null || newPasswordHash.isBlank()) {
+-            throw new IllegalArgumentException("New password cannot be empty.");
+-        }
+-        this.passwordHash = newPasswordHash;
+-    }
+-
+-    public void changePassword() {
+-        // Hook when passwordHash is updated directly via setter
+-    }
+-
+-    public int getAdminId() {
+-        return adminId;
+-    }
+-
+-    public void setAdminId(int adminId) {
+-        this.adminId = adminId;
+-    }
+-
+-    public String getUsername() {
+-        return username;
+-    }
+-
+-    public void setUsername(String username) {
+-        this.username = username;
+-    }
+-
+-    public String getPasswordHash() {
+-        return passwordHash;
+-    }
+-
+-    public void setPasswordHash(String passwordHash) {
+-        this.passwordHash = passwordHash;
+-    }
+-
+-    public String getFullName() {
+-        return fullName;
+-    }
+-
+-    public void setFullName(String fullName) {
+-        this.fullName = fullName;
+-    }
+-
+-    public String getRole() {
+-        return role;
+-    }
+-
+-    public void setRole(String role) {
+-        this.role = role;
+-    }
+-
+-    public boolean isActive() {
+-        return active;
+-    }
+-
+-    public void setActive(boolean active) {
+-        this.active = active;
+-    }
+-
+-    public boolean isLoggedIn() {
+-        return loggedIn;
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/service/PaymentService.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/service/PaymentService.java b/src/main/java/com/group3/gymsync/view/service/PaymentService.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/service/PaymentService.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,5 +0,0 @@
+-package com.group3.gymsync.view.service;
+-
+-public class PaymentService {
+-    
+-}
+Index: src/main/java/com/group3/gymsync/view/model/MembershipPlan.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/model/MembershipPlan.java b/src/main/java/com/group3/gymsync/view/model/MembershipPlan.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/model/MembershipPlan.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,88 +0,0 @@
+-package com.group3.gymsync.view.model;
+-
+-public abstract class MembershipPlan {
+-    protected int planId;
+-    protected String planName;
+-    protected Double baseFee;
+-    protected int durationDays;
+-    protected String description;
+-    protected String benefit;
+-
+-    public MembershipPlan() {
+-    }
+-
+-    public MembershipPlan(int planId, String planName, Double baseFee, int durationDays, String description, String benefit) {
+-        this.planId = planId;
+-        this.planName = planName;
+-        setBaseFee(baseFee);
+-        setDurationDays(durationDays);
+-        this.description = description;
+-        this.benefit = benefit;
+-    }
+-
+-    public abstract Double calculateFee();
+-
+-    public abstract String getBenefits();
+-
+-    public String getPlanDetails() {
+-        return "Plan ID: " + planId +
+-               " | Name: " + planName +
+-               " | Duration: " + durationDays + " days" +
+-               " | Base Fee: " + baseFee +
+-               " | Description: " + description;
+-    }
+-
+-    public int getPlanId() {
+-        return planId;
+-    }
+-
+-    public void setPlanId(int planId) {
+-        this.planId = planId;
+-    }
+-
+-    public String getPlanName() {
+-        return planName;
+-    }
+-
+-    public void setPlanName(String planName) {
+-        this.planName = planName;
+-    }
+-
+-    public Double getBaseFee() {
+-        return baseFee;
+-    }
+-
+-    public void setBaseFee(Double baseFee) {
+-        if (baseFee == null || baseFee < 0) {
+-            throw new IllegalArgumentException("Base fee cannot be null or negative.");
+-        }
+-        this.baseFee = baseFee;
+-    }
+-
+-    public int getDurationDays() {
+-        return durationDays;
+-    }
+-
+-    public void setDurationDays(int durationDays) {
+-        if (durationDays <= 0) {
+-            throw new IllegalArgumentException("Duration days must be greater than zero.");
+-        }
+-        this.durationDays = durationDays;
+-    }
+-
+-    public String getDescription() {
+-        return description;
+-    }
+-
+-    public void setDescription(String description) {
+-        this.description = description;
+-    }
+-
+-    public String getBenefit() {
+-        return benefit;
+-    }
+-
+-    public void setBenefit(String benefit) {
+-        this.benefit = benefit;
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/model/Attendance.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/model/Attendance.java b/src/main/java/com/group3/gymsync/view/model/Attendance.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/model/Attendance.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,112 +0,0 @@
+- package com.group3.gymsync.view.model;
+-
+-import model.Membership;
+-
+-import java.time.LocalDateTime;
+-import java.time.format.DateTimeFormatter;
+-
+-public class Attendance {
+-    private int attendanceId;
+-    private int memberId;
+-    private int adminId;
+-    private String checkInTime;
+-    private String status;
+-    private String remarks;
+-
+-    public Attendance() {
+-    }
+-
+-    public Attendance(int attendanceId, int memberId, int adminId, String checkInTime, String status, String remarks) {
+-        this.attendanceId = attendanceId;
+-        this.memberId = memberId;
+-        this.adminId = adminId;
+-        this.checkInTime = checkInTime;
+-        this.status = status;
+-        this.remarks = remarks;
+-    }
+-
+-    public void recordCheckIn() {
+-        if (this.checkInTime == null || this.checkInTime.isBlank()) {
+-            this.checkInTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+-        }
+-        this.status = "Checked In";
+-    }
+-
+-    public boolean validateMembership(Membership membership) {
+-        if (membership == null) {
+-            this.status = "Invalid Membership";
+-            this.remarks = "No active membership found.";
+-            return false;
+-        }
+-        boolean isExpired = membership.checkExpiration();
+-        boolean isActiveStatus = "Active".equalsIgnoreCase(membership.getMembershipStatus());
+-        if (!isExpired && isActiveStatus) {
+-            this.status = "Valid";
+-            return true;
+-        }
+-        this.status = "Denied";
+-        this.remarks = "Membership is expired or inactive.";
+-        return false;
+-    }
+-
+-    public boolean validateMembership() {
+-        return "Valid".equalsIgnoreCase(this.status) || "Checked In".equalsIgnoreCase(this.status);
+-    }
+-
+-    public String getAttendanceDetails() {
+-        return "Attendance ID: " + attendanceId +
+-               " | Member ID: " + memberId +
+-               " | Admin ID: " + adminId +
+-               " | Time: " + checkInTime +
+-               " | Status: " + status +
+-               " | Remarks: " + (remarks != null ? remarks : "None");
+-    }
+-
+-    public int getAttendanceId() {
+-        return attendanceId;
+-    }
+-
+-    public void setAttendanceId(int attendanceId) {
+-        this.attendanceId = attendanceId;
+-    }
+-
+-    public int getMemberId() {
+-        return memberId;
+-    }
+-
+-    public void setMemberId(int memberId) {
+-        this.memberId = memberId;
+-    }
+-
+-    public int getAdminId() {
+-        return adminId;
+-    }
+-
+-    public void setAdminId(int adminId) {
+-        this.adminId = adminId;
+-    }
+-
+-    public String getCheckInTime() {
+-        return checkInTime;
+-    }
+-
+-    public void setCheckInTime(String checkInTime) {
+-        this.checkInTime = checkInTime;
+-    }
+-
+-    public String getStatus() {
+-        return status;
+-    }
+-
+-    public void setStatus(String status) {
+-        this.status = status;
+-    }
+-
+-    public String getRemarks() {
+-        return remarks;
+-    }
+-
+-    public void setRemarks(String remarks) {
+-        this.remarks = remarks;
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/model/Member.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/model/Member.java b/src/main/java/com/group3/gymsync/view/model/Member.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/model/Member.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,121 +0,0 @@
+-package com.group3.gymsync.view.model;
+-
+-public class Member {
+-    private int memberId;
+-    private String firstName;
+-    private String lastName;
+-    private String contactNumber;
+-    private String email;
+-    private String address;
+-    private String dateRegistered;
+-    private String status;
+-
+-    public Member() {
+-        this.status = "Active";
+-    }
+-
+-    public Member(int memberId, String firstName, String lastName, String contactNumber,
+-                  String email, String address, String dateRegistered, String status) {
+-        this.memberId = memberId;
+-        this.firstName = firstName;
+-        this.lastName = lastName;
+-        this.contactNumber = contactNumber;
+-        this.email = email;
+-        this.address = address;
+-        this.dateRegistered = dateRegistered;
+-        this.status = status != null ? status : "Active";
+-    }
+-
+-    public String getFullName() {
+-        String first = firstName != null ? firstName.trim() : "";
+-        String last = lastName != null ? lastName.trim() : "";
+-        return (first + " " + last).trim();
+-    }
+-
+-    public void updateProfile(String firstName, String lastName, String contactNumber, String email, String address) {
+-        if (firstName == null || firstName.isBlank() || lastName == null || lastName.isBlank()) {
+-            throw new IllegalArgumentException("First name and last name are required.");
+-        }
+-        this.firstName = firstName.trim();
+-        this.lastName = lastName.trim();
+-        this.contactNumber = contactNumber;
+-        this.email = email;
+-        this.address = address;
+-    }
+-
+-    public void updateProfile() {
+-        // Hook for GUI/controller-driven profile updates after setters are invoked
+-    }
+-
+-    public String getMemberDetails() {
+-        return "Member ID: " + memberId +
+-               " | Name: " + getFullName() +
+-               " | Contact: " + contactNumber +
+-               " | Email: " + email +
+-               " | Status: " + status;
+-    }
+-
+-    public int getMemberId() {
+-        return memberId;
+-    }
+-
+-    public void setMemberId(int memberId) {
+-        this.memberId = memberId;
+-    }
+-
+-    public String getFirstName() {
+-        return firstName;
+-    }
+-
+-    public void setFirstName(String firstName) {
+-        this.firstName = firstName;
+-    }
+-
+-    public String getLastName() {
+-        return lastName;
+-    }
+-
+-    public void setLastName(String lastName) {
+-        this.lastName = lastName;
+-    }
+-
+-    public String getContactNumber() {
+-        return contactNumber;
+-    }
+-
+-    public void setContactNumber(String contactNumber) {
+-        this.contactNumber = contactNumber;
+-    }
+-
+-    public String getEmail() {
+-        return email;
+-    }
+-
+-    public void setEmail(String email) {
+-        this.email = email;
+-    }
+-
+-    public String getAddress() {
+-        return address;
+-    }
+-
+-    public void setAddress(String address) {
+-        this.address = address;
+-    }
+-
+-    public String getDateRegistered() {
+-        return dateRegistered;
+-    }
+-
+-    public void setDateRegistered(String dateRegistered) {
+-        this.dateRegistered = dateRegistered;
+-    }
+-
+-    public String getStatus() {
+-        return status;
+-    }
+-
+-    public void setStatus(String status) {
+-        this.status = status;
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/database/DatabaseConnection.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/database/DatabaseConnection.java b/src/main/java/com/group3/gymsync/view/database/DatabaseConnection.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/database/DatabaseConnection.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.database;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/util/InputValidator.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/util/InputValidator.java b/src/main/java/com/group3/gymsync/view/util/InputValidator.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/util/InputValidator.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.util;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/gui/MemberFrame.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/gui/MemberFrame.java b/src/main/java/com/group3/gymsync/view/gui/MemberFrame.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/gui/MemberFrame.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.gui;
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/service/MembershipService.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/service/MembershipService.java b/src/main/java/com/group3/gymsync/view/service/MembershipService.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/service/MembershipService.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,5 +0,0 @@
+-package com.group3.gymsync.view.service;
+-
+-public class MembershipService {
+-    
+-}
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM__Changes_.xml	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]" date="1795633684998" recycled="false" toDelete="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 26/11/2026 3:08 AM [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: src/main/java/com/group3/gymsync/view/service/MemberService.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/service/MemberService.java b/src/main/java/com/group3/gymsync/view/service/MemberService.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/service/MemberService.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,5 +0,0 @@
+-package com.group3.gymsync.view.service;
+-
+-public class MemberService {
+-    
+-}
+Index: src/main/java/com/group3/gymsync/view/gui/ReportsFrame.java
+===================================================================
+diff --git a/src/main/java/com/group3/gymsync/view/gui/ReportsFrame.java b/src/main/java/com/group3/gymsync/view/gui/ReportsFrame.java
+deleted file mode 100644
+--- a/src/main/java/com/group3/gymsync/view/gui/ReportsFrame.java	(revision 263e139815eb91d16d77893a71da7773fa503551)
++++ /dev/null	(revision 263e139815eb91d16d77893a71da7773fa503551)
+@@ -1,1 +0,0 @@
+-package com.group3.gymsync.view.gui;
+\ No newline at end of file
+diff --git a/README.md b/README.md
+deleted file mode 100644
+diff --git a/database/gymsync_db.sql b/database/gymsync_db.sql
+deleted file mode 100644
+diff --git a/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]1/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_11_2026_3_08_AM_[Changes]1/shelved.patch
+deleted file mode 100644
